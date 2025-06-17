@@ -178,6 +178,7 @@ def plots(omega_m, Omega_m, psi_s, psi_r, i_s, i_r, theta, \
         print('22 - Voltage in the park domain')
         print('23 - Evolution of the magnitude of the voltage in the park domain')
         print('24 - Frequency')
+        print('25 - Rotational speed')
         #print('20 - Pseudo-Mechanical plots')
         image = input('Enter the code of the image you want to print:')
         if image == '1':
@@ -345,10 +346,13 @@ def plots(omega_m, Omega_m, psi_s, psi_r, i_s, i_r, theta, \
             plt.show()
             pass
         elif image == '19':
-            x = (omega - 2*(Omega_m))/omega
+            numerator = 2*np.pi*f_t - 2*Omega_m
+            denominator = 2*np.pi*f_t
+            x = np.full_like(f_t, 0)  # Initialize with z values
+            mask = (f_t > 0.1)  # Only calculate for f_t > 1
+            x[mask] = numerator[mask] / denominator[mask]
             #19
             plt.figure()
-            plt.plot(time, 9.55*Omega_m, label = 'Omega_m')
             plt.plot(time, x*100, label = 'x')
             plt.grid(True)
             plt.legend()
@@ -396,6 +400,15 @@ def plots(omega_m, Omega_m, psi_s, psi_r, i_s, i_r, theta, \
         elif image == '24':
             plt.figure()
             plt.plot(time, f_t, label = 'frequency')
+            plt.grid(True)
+            plt.legend()
+            plt.show()
+            pass
+        elif image == '25':
+            x = (2*np.pi*f_t - 2*(Omega_m))/(2*np.pi*f_t)
+            #19
+            plt.figure()
+            plt.plot(time, 9.55*Omega_m, label = 'Omega_m')
             plt.grid(True)
             plt.legend()
             plt.show()
