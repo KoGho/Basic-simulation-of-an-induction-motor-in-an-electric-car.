@@ -349,7 +349,7 @@ def plots(omega_m, Omega_m, psi_s, psi_r, i_s, i_r, theta, \
             numerator = 2*np.pi*f_t - 2*Omega_m
             denominator = 2*np.pi*f_t
             x = np.full_like(f_t, 0)  # Initialize with z values
-            mask = (f_t > 0.1)  # Only calculate for f_t > 1
+            mask = (f_t > 1)  # Only calculate for f_t > 1
             x[mask] = numerator[mask] / denominator[mask]
             #19
             plt.figure()
